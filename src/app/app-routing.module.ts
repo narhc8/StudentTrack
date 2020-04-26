@@ -6,9 +6,27 @@ import { SignupComponent } from './signup/signup.component';
 
 
 const routes: Routes = [
-  {path: '',  component: LoginComponent, pathMatch: 'full'},
-  {path: 'login',  component: LoginComponent, pathMatch: 'full'},
-  {path: 'signup',  component: SignupComponent, pathMatch: 'full'},
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {
+    path: 'home',
+    children: [
+      {
+        path: '',
+        component: HomeComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'login', // child route path
+        component: LoginComponent, // child route component that the router renders
+        pathMatch: 'full'
+      },
+      {
+        path: 'signup',
+        component: SignupComponent, // another child route component that the router renders
+        pathMatch: 'full'
+      }
+    ]
+  }
 ];
 
 @NgModule({
