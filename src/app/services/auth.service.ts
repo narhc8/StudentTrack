@@ -9,6 +9,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   testNodeServer() {
-    return this.http.get('http://localhost:8098/');
+    console.log('in auth service accessing localhost');
+    return this.http.get('http://127.0.0.1:8098/');
   }
 }
