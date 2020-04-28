@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.auth.testNodeServer().subscribe((data) => {
+      console.log('home page accessing test node');
       console.log(data);
     });
   }
