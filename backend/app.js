@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
-const port = 8098;
+const port = 8080;
 var cors = require('cors');
 
 app.use(cors());
 
-app.get('/', (req, res) => {
+app.get('/test', (req, res) => {
     console.log('Hey someone hit the api');
     res.json({ response: 'hello world!' });
 });
