@@ -10,6 +10,6 @@ export class AuthService {
 
   testNodeServer() {
     console.log('in auth service accessing localhost');
-    return this.http.get('http://localhost:8098/');
+    return this.http.get('http://localhost:8080/test');
   }
 }
