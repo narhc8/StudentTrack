@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 8080;
+const port = 8000;
 var cors = require('cors');
 
 app.use(cors());
@@ -11,4 +11,4 @@ app.get('/test', (req, res) => {
 });
 
 
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
