@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  baseURL = environment.base_API_URL;
   constructor(private http: HttpClient) { }
 
   testNodeServer() {
-    return this.http.get('http://localhost:8098/');
+    console.log('in auth service accessing localhost');
+    return this.http.get(this.baseURL + '/test');
   }
 }
