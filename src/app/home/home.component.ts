@@ -12,10 +12,6 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService) { }
 
   ngOnInit() {
-    this.auth.testNodeServer().subscribe((data) => {
-      console.log('home page accessing test node');
-      console.log(data);
-    });
   }
 
   homeButtonClick(location) {
