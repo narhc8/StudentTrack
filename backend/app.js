@@ -55,5 +55,42 @@ app.post('/signup', async(req, res) => {
     });
 });
 
+app.post('/login', async(req, res) => {
+    console.log('User is trying to login');
+    var resResult;
+    const usernameD = connection.escape(req.body.username);
+    const passwordD = req.body.password;
+
+    const sql_query = "SELECT u.password FROM users AS u WHERE u.username = " + usernameD + ";";
+
+    connection.query(sql_query, function(err, result) {
+        if (err) {
+            resResult = {
+                response: 'ERROR',
+                data: err
+            }
+            res.json(resResult);
+        } else {
+            const hashedPassword = result[0]['password'];
+            console.log(hashedPassword);
+            bcrypt.compare(passwordD, hashedPassword).then((response) => {
+                if (response) {
+                    resResult = {
+                        response: 'SUCCESS',
+                        code: 1001
+                    }
+                    res.json(resResult);
+                } else {
+                    resResult = {
+                        response: 'ERROR',
+                        code: 1002
+                    }
+                    res.json(resResult);
+                }
+            })
+        }
+    });
+});
+
 
 app.listen(port, () => console.log(`Example app listening`));

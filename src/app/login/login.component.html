@@ -1,25 +1,40 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100 p-t-50 p-b-90">
-            <form class="login100-form validate-form flex-sb flex-w">
+            <form [formGroup]="loginForm" class="login100-form validate-form flex-sb flex-w">
                 <span class="login100-form-title p-b-51" style="padding-bottom: 10px;">
                     Login
                 </span>
 
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Username is required">
-                    <input class="input100" type="text" name="username" placeholder="Username" />
+                    <input [formControl]="loginForm.controls['username']" class="input100" type="text" name="username" placeholder="Username" />
                     <span class="focus-input100"></span>
                 </div>
 
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
-                    <input class="input100" type="password" name="pass" placeholder="Password" />
+                    <input [formControl]="loginForm.controls['password']" class="input100" type="password" name="pass" placeholder="Password" />
                     <span class="focus-input100"></span>
                 </div>
             </form>
             <div style="text-align: center;">
-                <div class="container-login100-form-login-btn m-t-17" style="padding-bottom: 20px; margin-left: auto;">
-                    <button class="login100-form-login-btn">
+                <div *ngIf="!loggingInUser && passwordWrong" (click)="dismiss('password')" class="alert alert-success" style="margin-bottom: 15px;" role="alert">
+                    Incorrect Password
+                </div>
+
+                <div *ngIf="!loggingInUser && unknownError" (click)="dismiss('error')" class="alert alert-success" style="margin-bottom: 15px;" role="alert">
+                    Oops! Something went wrong. Code: 1002
+                </div>
+
+                <div *ngIf="!loggingInUser" class="container-login100-form-login-btn m-t-17" style="padding-bottom: 20px; margin-left: auto;">
+                    <button (click)="loginClick()" class="login100-form-login-btn">
                         Login
+                    </button>
+                </div>
+
+                <div *ngIf="loggingInUser" class="container-login100-form-login-btn m-t-17" style="padding-bottom: 20px; margin-left: auto;">
+                    <button class="login100-form-login-btn">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
                     </button>
                 </div>
 

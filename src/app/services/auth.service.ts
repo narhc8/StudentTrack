@@ -22,4 +22,12 @@ export class AuthService {
 
     return this.http.post<any>(this.baseURL + '/signup', body);
   }
+
+  login(loginData) {
+    const body = {
+      username: loginData.username,
+      password: loginData.password
+    }
+    return this.http.post<any>(this.baseURL + '/login', body);
+  }
 }
