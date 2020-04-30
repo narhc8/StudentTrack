@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,17 @@ import { AuthService } from '../services/auth.service';
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
 
-  constructor(private location: Location, private formBuilder: FormBuilder, private auth: AuthService) {
+  creatingUser = false;
+
+  userSignedUp = false;
+
+  constructor(
+    private location: Location,
+    private formBuilder: FormBuilder,
+    private auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+    ) {
     this.signupForm = this.formBuilder.group({
       first_name: [
         ''
@@ -35,11 +46,21 @@ export class SignupComponent implements OnInit {
   ngOnInit() {}
 
   signupClick() {
+    this.creatingUser = true;
     const signupData = this.signupForm.value;
     this.auth.signup(signupData).subscribe((data) => {
-      console.log(data);
+      if (data.response === 'SUCCESS') {
+        console.log('User has been sucessfully registered');
+        this.creatingUser = false;
+        this.userSignedUp = true;
+      }
     });
     console.log(signupData);
+  }
+
+  goToLogin(location) {
+    this.userSignedUp = false;
+    this.router.navigateByUrl('home/' + location, {relativeTo: this.route});
   }
 
   goToHomePage() {

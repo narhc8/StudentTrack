@@ -1,4 +1,4 @@
-<div class="limiter">
+<div class="container">
     <div class="container-signup100">
         <div class="wrap-signup100 p-t-50 p-b-90">
             <form [formGroup]="signupForm" class="signup100-form validate-form flex-sb flex-w">
@@ -31,12 +31,25 @@
                     <span class="focus-input100"></span>
                 </div>
             </form>
+
             <div style="text-align: center;">
-                <div class="container-signup100-form-signup-btn m-t-17" style="padding-bottom: 20px; margin-left: auto;">
+                <div *ngIf="!creatingUser && userSignedUp" (click)="goToLogin('login')" class="alert alert-success" style="margin-bottom: 15px;" role="alert">
+                    All Signed up! Click here to log in!
+                </div>
+
+                <div *ngIf="!creatingUser" class="container-signup100-form-signup-btn m-t-17" style="padding-bottom: 20px; margin-left: auto;">
                     <button class="signup100-form-signup-btn" (click)="signupClick()">
                         Create Account
                     </button>
                 </div>
+
+                <div *ngIf="creatingUser" class="container-signup100-form-signup-btn m-t-17" style="padding-bottom: 20px; margin-left: auto;">
+                    <button class="signup100-form-signup-btn">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                </div>
+
                 <div>
                     <a class="txt1" (click)="goToHomePage()">
                         Cancel
