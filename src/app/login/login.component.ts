@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { StorageMap } from '@ngx-pwa/local-storage';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -18,20 +19,16 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private auth: AuthService
-    ) {
-      this.loginForm = this.formBuilder.group({
-        username: [
-          ''
-        ],
-        password: [
-          ''
-        ]
-      });
-    }
-
-  ngOnInit() {
+    private auth: AuthService,
+    private storage: StorageMap
+  ) {
+    this.loginForm = this.formBuilder.group({
+      username: [''],
+      password: [''],
+    });
   }
+
+  ngOnInit() {}
 
   loginClick() {
     this.loggingInUser = true;
@@ -39,13 +36,17 @@ export class LoginComponent implements OnInit {
     this.auth.login(loginData).subscribe((data) => {
       if (data.code === 1001) {
         console.log('User password is correct');
+        this.loggingInUser = false;
+        this.storage.set('user_id', data.user_id);
         this.router.navigateByUrl('home/boards');
       } else if (data.code === 1002) {
-        console.log('User is incorrect');
+        console.log('User password is incorrect');
         this.passwordWrong = true;
+        this.loggingInUser = false;
       } else {
         console.log('unknown error');
         this.unknownError = true;
+        this.loggingInUser = false;
       }
       console.log(data);
     });
@@ -60,7 +61,6 @@ export class LoginComponent implements OnInit {
   }
 
   goToSignupPage(location) {
-    this.router.navigateByUrl('home/' + location, {relativeTo: this.route});
+    this.router.navigateByUrl('home/' + location, { relativeTo: this.route });
   }
-
 }

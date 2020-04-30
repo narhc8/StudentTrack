@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageMap } from '@ngx-pwa/local-storage';
 
 @Component({
   selector: 'app-boards',
@@ -6,16 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./boards.component.scss'],
 })
 export class BoardsComponent implements OnInit {
-  boards = ['Board 1', 'Board 2'];
+  boards = ['Test'];
+  userId;
 
-  constructor() {
+  constructor(private storage: StorageMap) {
+    this.storage.get('user_id').subscribe((data) => (this.userId = data));
+  }
+
+  ngOnInit(): void {
     this.populateBoards();
   }
 
-  ngOnInit(): void {}
-
   viewBoard(board: string) {
-    alert('Opening board ' + board);
+    alert('Opening board ' + board + ' with ID ' + this.userId);
   }
 
   populateBoards(): void {}
