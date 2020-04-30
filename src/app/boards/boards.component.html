@@ -1,10 +1,25 @@
 <div class="container">
-    <div class="row justify-content-center" style="margin-top: 20px;">
-        <div class="col-lg-11 col-xl-10">
-            <div class="page-header">
-                <h1>Boards 🤓</h1>
-                <p class="lead">Boards you are currently a apart of and own.</p>
-            </div>
-        </div>
+  <div class="row justify-content-center" style="margin-top: 20px;">
+    <div class="col-lg-11 col-xl-10">
+      <div class="page-header">
+        <h1>Boards 🤓</h1>
+        <p class="lead">Boards you are currently a apart of and own.</p>
+      </div>
+      <div class="row content-list-head">
+        Create new board
+        <button class="btn btn-round">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+      <ul
+        (click)="viewBoard(board)"
+        class="boardList"
+        *ngFor="let board of boards"
+      >
+        {{
+          board
+        }}
+      </ul>
     </div>
+  </div>
 </div>
