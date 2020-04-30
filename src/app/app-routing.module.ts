@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { BoardsComponent } from './boards/boards.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,16 @@ const routes: Routes = [
       {
         path: 'signup',
         component: SignupComponent, // another child route component that the router renders
+        pathMatch: 'full'
+      },
+      {
+        path: 'boards',
+        component: BoardsComponent, // another child route component that the router renders
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent, // another child route component that the router renders
         pathMatch: 'full'
       }
     ]
