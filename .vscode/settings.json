@@ -1,0 +1,16 @@
+{
+    "sqltools.connections": [
+        {
+            "connectionTimeout": 5,
+            "database": "romanellicj",
+            "dialect": "MySQL",
+            "isActive": false,
+            "isConnected": false,
+            "name": "508 Project Server",
+            "password": "V00884541",
+            "port": 3306,
+            "server": "3.234.246.29",
+            "username": "romanellicj"
+        }
+    ]
+}
