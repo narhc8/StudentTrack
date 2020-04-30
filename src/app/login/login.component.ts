@@ -37,8 +37,9 @@ export class LoginComponent implements OnInit {
       if (data.code === 1001) {
         console.log('User password is correct');
         this.loggingInUser = false;
-        this.storage.set('user_id', data.user_id);
-        this.router.navigateByUrl('home/boards');
+        this.storage
+          .set('user_id', data.user_id)
+          .subscribe((data) => this.router.navigateByUrl('home/boards'));
       } else if (data.code === 1002) {
         console.log('User password is incorrect');
         this.passwordWrong = true;
