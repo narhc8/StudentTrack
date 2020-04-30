@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "romanellicj",
+            "dialect": "MySQL",
+            "name": "508 SQL Server",
+            "password": "V00884541",
+            "port": 3306,
+            "server": "3.234.246.29",
+            "username": "romanellicj"
+        }
+    ]
+}
