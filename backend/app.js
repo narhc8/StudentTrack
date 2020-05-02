@@ -110,7 +110,10 @@ app.get("/boards", async (req, res) => {
   const uId = connection.escape(req.query.user_id);
   console.log(req);
   const sql_query =
-    "SELECT board_name FROM `boards` WHERE (author_id = " + uId + ");";
+    "SELECT board_name FROM `boards` JOIN `groups` " +
+    "ON (boards.board_id = groups.board_id AND groups.user_id = " +
+    uId +
+    ")";
   connection.query(sql_query, function (err, result) {
     res.json(result);
   });
