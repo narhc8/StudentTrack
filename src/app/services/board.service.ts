@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BoardService {
+  baseURL = environment.base_API_URL;
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
+  getBoards(userId) {
+    const param = { params: { user_id: userId } };
+    return this.http.get<any>(this.baseURL + '/boards', param);
+  }
 }

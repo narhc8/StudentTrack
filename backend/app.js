@@ -107,7 +107,13 @@ app.post("/login", async (req, res) => {
 });
 app.get("/boards", async (req, res) => {
   console.log("Retrieving board info");
-  const userId = connection.escape(req.params.userId);
+  const uId = connection.escape(req.query.user_id);
+  console.log(req);
+  const sql_query =
+    "SELECT board_name FROM `boards` WHERE (author_id = " + uId + ");";
+  connection.query(sql_query, function (err, result) {
+    res.json(result);
+  });
 });
 
 app.listen(port, () => console.log(`Example app listening`));
