@@ -105,17 +105,50 @@ app.post("/login", async (req, res) => {
     }
   });
 });
-app.get("/boards", async (req, res) => {
+
+app.get('/getBoards', function (req, res) {
   console.log("Retrieving board info");
   const uId = connection.escape(req.query.user_id);
-  console.log(req);
   const sql_query =
-    "SELECT board_name FROM `boards` JOIN `groups` " +
-    "ON (boards.board_id = groups.board_id AND groups.user_id = " +
+    "SELECT B.board_name, B.description, B.board_id FROM `boards` AS B JOIN `groups` AS G " +
+    "ON (B.board_id = G.board_id AND G.user_id = " +
     uId +
     ")";
   connection.query(sql_query, function (err, result) {
     res.json(result);
+  });
+});
+
+app.post('/addBoard', function (req, res) {
+  console.log("putting board info");
+  const board_name = connection.escape(req.body.board_name);
+  const description = connection.escape(req.body.description);
+  const userId = connection.escape(req.body.user_id);
+  const sql_query =
+    "INSERT INTO boards (board_name, description) VALUES (" +
+    board_name +
+    ", " +
+    description +
+    ");";
+  connection.query(sql_query, function (err, result) {
+    if (err) throw err;
+    const boardId = result.insertId;
+    const anotherSqlQuery = "CALL addCreator(" + userId + ", " + boardId + ");";
+    connection.query(anotherSqlQuery, function (err, result) {
+      if (err) {
+        result = {
+          response: "ERROR",
+          data: err,
+        };
+        res.json(result);
+      } else {
+        result = {
+          response: "SUCCESS",
+          data: result,
+        };
+        res.json(result);
+      }
+    });
   });
 });
 
