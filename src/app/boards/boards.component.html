@@ -34,20 +34,33 @@
                                 </svg>
                             </span>
                         </div>
-                        <input type="search" class="form-control filter-list-input" placeholder="Filter projects"
-                            aria-label="Filter Projects">
+                        <input type="search" (keyup)="searchBoards($event)" class="form-control filter-list-input"
+                            placeholder="Filter projects" aria-label="Filter Projects">
                     </div>
 
                 </div>
 
                 <div class="card-columns">
-                    <div *ngFor="let board of boards" class="card text-white bg-dark mb-3"
-                        style="max-width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title text-white bg-dark">{{board.board_name}}</h5>
-                            <p class="card-text">{{board.description}}</p>
-                            <a (click)="viewBoard(board, 'dashboard')" class="btn btn-primary">Open Board</a>
+                    <div *ngFor="let board of searchableBoards">
+                        <div *ngIf="!noBoardsFound" class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title text-white bg-dark">{{board.board_name}}</h5>
+                                <p class="card-text">{{board.description}}</p>
+                                <a (click)="viewBoard(board, 'dashboard')" class="btn btn-primary">Open Board</a>
+                            </div>
                         </div>
+                    </div>
+                    <div *ngIf="noBoardsFound">
+                        <div class="card bg-primary text-white text-center p-3">
+                            <blockquote class="blockquote mb-0">
+                              <p>Looks like theres no boards 😬</p>
+                              <footer class="text-white">
+                                <small>
+                                  Try searching for something different
+                                </small>
+                              </footer>
+                            </blockquote>
+                          </div>
                     </div>
                 </div>
             </div>

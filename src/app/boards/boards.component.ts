@@ -11,6 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class BoardsComponent implements OnInit {
   boards: any;
   userId: any;
+  searchableBoards: any;
+  noBoardsFound = false;
 
   constructor(
     private storage: StorageMap,
@@ -33,8 +35,29 @@ export class BoardsComponent implements OnInit {
   populateBoards(uId): void {
     console.log(this.userId);
     this.bServ.getBoards(uId).subscribe((data) => {
+      this.searchableBoards = data;
       this.boards = data;
       console.log(data);
     });
+  }
+
+  searchBoards(ev) {
+    console.log(ev);
+    // Reset items back to all of the items
+    this.searchableBoards = this.boards;
+    // set val to the value of the ev target
+    const varr = ev.target.value;
+    if (varr && varr.trim() !== '') {
+      this.searchableBoards = this.searchableBoards.filter((item) => {
+        return (item.board_name.toLowerCase().indexOf(varr.toLowerCase()) > -1 ||
+        item.board_name.toLowerCase().indexOf(varr.toLowerCase()) > -1);
+      });
+    }
+
+    if (this.searchableBoards.length === 0) {
+      this.noBoardsFound = true;
+    } else {
+      this.noBoardsFound = false;
+    }
   }
 }
