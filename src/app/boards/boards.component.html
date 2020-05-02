@@ -41,23 +41,16 @@
                 </div>
 
                 <div class="card-columns">
-                    <div *ngFor="let board of boards" (click)="viewBoard(board)" class="card text-white bg-dark mb-3"
+                    <div *ngFor="let board of boards" class="card text-white bg-dark mb-3"
                         style="max-width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title text-white bg-dark">{{board.board_name}}</h5>
                             <p class="card-text">{{board.description}}</p>
-                            <a (click)="viewBoard(board)" class="btn btn-primary">Open Board</a>
+                            <a (click)="viewBoard(board, 'dashboard')" class="btn btn-primary">Open Board</a>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <!-- <div class="row content-list-head">
-                Create new board
-            </div>
-            <ul (click)="viewBoard(board)" class="boardList" *ngFor="let board of boards">
-                {{ board.board_name }}
-            </ul> -->
         </div>
     </div>
 </div>

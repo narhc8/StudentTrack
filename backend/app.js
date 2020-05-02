@@ -109,8 +109,8 @@ app.get("/boards", async (req, res) => {
   console.log("Retrieving board info");
   const uId = connection.escape(req.query.user_id);
   const sql_query =
-    "SELECT board_name, description FROM `boards` JOIN `groups` " +
-    "ON (boards.board_id = groups.board_id AND groups.user_id = " +
+    "SELECT B.board_name, B.description, B.board_id FROM `boards` AS B JOIN `groups` AS G " +
+    "ON (B.board_id = G.board_id AND G.user_id = " +
     uId +
     ")";
   connection.query(sql_query, function (err, result) {
