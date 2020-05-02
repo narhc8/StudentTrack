@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { BoardService } from '../services/board.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,6 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./boards.component.scss'],
 })
 export class BoardsComponent implements OnInit {
+
+  @ViewChild('closeModal', { static: false }) closeModal: ElementRef;
   boards: any;
   userId: any;
   searchableBoards: any;
@@ -30,6 +32,20 @@ export class BoardsComponent implements OnInit {
 
   viewBoard(board, location) {
     this.router.navigate([location + '/' + board.board_id + '/'], {relativeTo: this.route});
+  }
+
+  addBoard(name, description) {
+    console.log(name);
+    console.log(description);
+    this.bServ.addBoard(name, description, this.userId).subscribe((data) => {
+      console.log(data);
+      if (data.response === 'SUCCESS') {
+        this.closeModal.nativeElement.click();
+        this.populateBoards(this.userId);
+      } else {
+        alert('Something went wrong' + data.code);
+      }
+    });
   }
 
   populateBoards(uId): void {

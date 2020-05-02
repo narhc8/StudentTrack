@@ -11,6 +11,16 @@ export class BoardService {
 
   getBoards(userId) {
     const param = { params: { user_id: userId } };
-    return this.http.get<any>(this.baseURL + '/boards', param);
+    return this.http.get<any>(this.baseURL + '/getBoards', param);
+  }
+
+  addBoard(bname, bdescription, buser_id) {
+    const body = {
+      board_name: bname,
+      description: bdescription,
+      user_id: buser_id
+    };
+
+    return this.http.post<any>(this.baseURL + '/addBoard', body);
   }
 }
