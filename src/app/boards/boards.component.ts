@@ -37,15 +37,19 @@ export class BoardsComponent implements OnInit {
   addBoard(name, description) {
     console.log(name);
     console.log(description);
-    this.bServ.addBoard(name, description, this.userId).subscribe((data) => {
-      console.log(data);
-      if (data.response === 'SUCCESS') {
-        this.closeModal.nativeElement.click();
-        this.populateBoards(this.userId);
-      } else {
-        alert('Something went wrong' + data.code);
-      }
-    });
+    if (name.length !== 0 ) {
+      this.bServ.addBoard(name, description, this.userId).subscribe((data) => {
+        console.log(data);
+        if (data.response === 'SUCCESS') {
+          this.closeModal.nativeElement.click();
+          this.populateBoards(this.userId);
+        } else {
+          alert('Something went wrong' + data.code);
+        }
+      });
+    } else {
+      alert('Sorry but board name cannot be empty');
+    }
   }
 
   populateBoards(uId): void {
