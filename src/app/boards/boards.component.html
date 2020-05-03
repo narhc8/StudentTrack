@@ -27,8 +27,8 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">New Board</h5>
-                                        <button #closeModal type="button" class="close btn btn-round" data-dismiss="modal"
-                                            aria-label="Close">
+                                        <button #closeModal type="button" class="close btn btn-round"
+                                            data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -38,13 +38,16 @@
                                                 aria-label="Board Name" aria-describedby="addon-wrapping">
                                         </div>
                                         <div class="input-group flex-nowrap" style="margin-top: 15px;">
-                                            <input #boardDescription type="text" class="form-control" placeholder="Board Description"
-                                                aria-label="Board Description" aria-describedby="addon-wrapping">
+                                            <input #boardDescription type="text" class="form-control"
+                                                placeholder="Board Description" aria-label="Board Description"
+                                                aria-describedby="addon-wrapping">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button (click)="addBoard(boardName.value, boardDescription.value)" type="button" class="btn btn-primary">Create
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cancel</button>
+                                        <button (click)="addBoard(boardName.value, boardDescription.value)"
+                                            type="button" class="btn btn-primary">Create
                                             Board</button>
                                     </div>
                                 </div>
@@ -74,7 +77,8 @@
                         <div *ngIf="!noBoardsFound" class="card text-white bg-dark mb-3" style="max-width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title text-white bg-dark">{{board.board_name}}</h5>
-                                <p class="card-text">{{board.description}}</p>
+                                <p *ngIf="board.description.length !== 0" class="card-text">{{board.description}}</p>
+                                <p *ngIf="board.description.length === 0" class="card-text">No Description</p>
                                 <a (click)="viewBoard(board, 'dashboard')" class="btn btn-primary">Open Board</a>
                             </div>
                         </div>
