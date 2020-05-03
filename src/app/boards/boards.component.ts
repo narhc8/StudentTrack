@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { BoardService } from '../services/board.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-boards',
@@ -9,7 +10,6 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./boards.component.scss'],
 })
 export class BoardsComponent implements OnInit {
-
   @ViewChild('closeModal', { static: false }) closeModal: ElementRef;
   boards: any;
   userId: any;
@@ -20,8 +20,9 @@ export class BoardsComponent implements OnInit {
     private storage: StorageMap,
     private bServ: BoardService,
     private router: Router,
-    private route: ActivatedRoute
-    ) {}
+    private route: ActivatedRoute,
+    private storageService: StorageService
+  ) {}
 
   ngOnInit(): void {
     this.storage.get('user_id').subscribe((data) => {
@@ -31,13 +32,16 @@ export class BoardsComponent implements OnInit {
   }
 
   viewBoard(board, location) {
-    this.router.navigate([location + '/' + board.board_id + '/'], {relativeTo: this.route});
+    this.storageService.boardObj = board;
+    this.router.navigate([location + '/' + board.board_id + '/'], {
+      relativeTo: this.route,
+    });
   }
 
   addBoard(name, description) {
     console.log(name);
     console.log(description);
-    if (name.length !== 0 ) {
+    if (name.length !== 0) {
       this.bServ.addBoard(name, description, this.userId).subscribe((data) => {
         console.log(data);
         if (data.response === 'SUCCESS') {
@@ -69,8 +73,10 @@ export class BoardsComponent implements OnInit {
     const varr = ev.target.value;
     if (varr && varr.trim() !== '') {
       this.searchableBoards = this.searchableBoards.filter((item) => {
-        return (item.board_name.toLowerCase().indexOf(varr.toLowerCase()) > -1 ||
-        item.board_name.toLowerCase().indexOf(varr.toLowerCase()) > -1);
+        return (
+          item.board_name.toLowerCase().indexOf(varr.toLowerCase()) > -1 ||
+          item.board_name.toLowerCase().indexOf(varr.toLowerCase()) > -1
+        );
       });
     }
 

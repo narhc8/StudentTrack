@@ -106,7 +106,7 @@ app.post("/login", async (req, res) => {
   });
 });
 
-app.get('/getBoards', function (req, res) {
+app.get("/getBoards", function (req, res) {
   console.log("Retrieving board info");
   const uId = connection.escape(req.query.user_id);
   const sql_query =
@@ -119,7 +119,7 @@ app.get('/getBoards', function (req, res) {
   });
 });
 
-app.post('/addBoard', function (req, res) {
+app.post("/addBoard", function (req, res) {
   console.log("putting board info");
   const board_name = connection.escape(req.body.board_name);
   const description = connection.escape(req.body.description);
