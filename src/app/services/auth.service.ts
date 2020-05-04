@@ -3,13 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   baseURL = environment.base_API_URL;
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {}
 
   signup(signupData) {
     const body = {
@@ -17,8 +15,8 @@ export class AuthService {
       last_name: signupData.last_name,
       email: signupData.email,
       username: signupData.username,
-      password: signupData.password
-    }
+      password: signupData.password,
+    };
 
     return this.http.post<any>(this.baseURL + '/signup', body);
   }
@@ -26,8 +24,8 @@ export class AuthService {
   login(loginData) {
     const body = {
       username: loginData.username,
-      password: loginData.password
-    }
+      password: loginData.password,
+    };
     return this.http.post<any>(this.baseURL + '/login', body);
   }
 }

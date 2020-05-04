@@ -29,14 +29,19 @@ const routes: Routes = [
       },
       {
         path: 'boards',
-        component: BoardsComponent, // another child route component that the router renders
-        pathMatch: 'full'
+        children: [
+          {
+            path: '',
+            component: BoardsComponent, // another child route component that the router renders
+            pathMatch: 'full'
+          },
+          {
+            path: 'dashboard/:id',
+            component: DashboardComponent, // another child route component that the router renders
+            pathMatch: 'full'
+          }
+        ]
       },
-      {
-        path: 'dashboard',
-        component: DashboardComponent, // another child route component that the router renders
-        pathMatch: 'full'
-      }
     ]
   }
 ];

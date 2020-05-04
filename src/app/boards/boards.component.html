@@ -1,9 +1,109 @@
+<div class="breadcrumb-bar navbar bg-white sticky-top">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a (click)="logout()">Logout</a>
+            </li>
+        </ol>
+    </nav>
+</div>
 <div class="container">
-    <div class="row justify-content-center" style="margin-top: 20px;">
+    <div class="row justify-content-center">
         <div class="col-lg-11 col-xl-10">
             <div class="page-header">
-                <h1>Boards 🤓</h1>
-                <p class="lead">Boards you are currently a apart of and own.</p>
+                <h1>Welcome {{name}}🤓</h1>
+                <p class="lead">Boards you are currently a part of and own.</p>
+            </div>
+            <hr>
+            <div>
+                <div class="row content-list-head" style="margin-bottom: 1.5rem;">
+                    <div class="col-auto" style="margin-bottom: 0.75rem;">
+                        <h3>Boards</h3>
+                        <button type="button" class="btn btn-round" data-toggle="modal" data-target="#exampleModal">
+                            <svg class="bi bi-plus" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">New Board</h5>
+                                        <button #closeModal type="button" class="close btn btn-round"
+                                            data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group flex-nowrap">
+                                            <input #boardName type="text" class="form-control" placeholder="Board Name"
+                                                aria-label="Board Name" aria-describedby="addon-wrapping">
+                                        </div>
+                                        <div class="input-group flex-nowrap" style="margin-top: 15px;">
+                                            <input #boardDescription type="text" class="form-control"
+                                                placeholder="Board Description" aria-label="Board Description"
+                                                aria-describedby="addon-wrapping">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cancel</button>
+                                        <button (click)="addBoard(boardName.value, boardDescription.value)"
+                                            type="button" class="btn btn-primary">Create
+                                            Board</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group input-group-round">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <svg class="bi bi-filter" width="1em" height="1em" viewBox="0 0 16 16"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M6 10.5a.5.5 0 01.5-.5h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5zm-2-3a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7a.5.5 0 01-.5-.5zm-2-3a.5.5 0 01.5-.5h11a.5.5 0 010 1h-11a.5.5 0 01-.5-.5z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </div>
+                        <input type="search" (keyup)="searchBoards($event)" class="form-control filter-list-input"
+                            placeholder="Filter projects" aria-label="Filter Projects">
+                    </div>
+
+                </div>
+
+                <div class="card-columns">
+                    <div *ngFor="let board of searchableBoards">
+                        <div *ngIf="!noBoardsFound" class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title text-white bg-dark">{{board.board_name}}</h5>
+                                <p *ngIf="board.board_desc.length !== 0" class="card-text">{{board.board_desc}}</p>
+                                <p *ngIf="board.board_desc.length === 0" class="card-text">No Description</p>
+                                <a (click)="viewBoard(board, 'dashboard')" class="btn btn-primary">Open Board</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="noBoardsFound">
+                        <div class="card bg-primary text-white text-center p-3">
+                            <blockquote class="blockquote mb-0">
+                                <p>Looks like theres no boards 😬</p>
+                                <footer class="text-white">
+                                    <small>
+                                        Try searching for something different
+                                    </small>
+                                </footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
