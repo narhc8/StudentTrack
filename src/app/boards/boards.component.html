@@ -1,8 +1,16 @@
+<div class="breadcrumb-bar navbar bg-white sticky-top">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a (click)="logout()">Logout</a>
+            </li>
+        </ol>
+    </nav>
+</div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-11 col-xl-10">
             <div class="page-header">
-                <h1>Welcome 🤓</h1>
+                <h1>Welcome {{name}}🤓</h1>
                 <p class="lead">Boards you are currently a part of and own.</p>
             </div>
             <hr>
@@ -77,8 +85,8 @@
                         <div *ngIf="!noBoardsFound" class="card text-white bg-dark mb-3" style="max-width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title text-white bg-dark">{{board.board_name}}</h5>
-                                <p *ngIf="board.description.length !== 0" class="card-text">{{board.description}}</p>
-                                <p *ngIf="board.description.length === 0" class="card-text">No Description</p>
+                                <p *ngIf="board.board_desc.length !== 0" class="card-text">{{board.board_desc}}</p>
+                                <p *ngIf="board.board_desc.length === 0" class="card-text">No Description</p>
                                 <a (click)="viewBoard(board, 'dashboard')" class="btn btn-primary">Open Board</a>
                             </div>
                         </div>
