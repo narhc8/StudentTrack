@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardsComponent } from './boards/boards.component';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { BoardsComponent } from './boards/boards.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    DragulaModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { StorageMap } from '@ngx-pwa/local-storage';
+import { StorageService } from '../services/storage.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,6 +21,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private storageService: StorageService,
     private auth: AuthService,
     private storage: StorageMap
   ) {
@@ -33,14 +36,21 @@ export class LoginComponent implements OnInit {
   loginClick() {
     this.loggingInUser = true;
     const loginData = this.loginForm.value;
-    this.auth.login(loginData).subscribe((data) => {
-      if (data.code === 1001) {
+    this.auth.login(loginData).subscribe((data2) => {
+      if (data2.code === 1001) {
         console.log('User password is correct');
         this.loggingInUser = false;
+        console.log(data2);
         this.storage
-          .set('user_id', data.user_id)
-          .subscribe((data) => this.router.navigateByUrl('home/boards'));
-      } else if (data.code === 1002) {
+          .set('user_id', data2.user.user_id)
+          .subscribe((data) => {
+            console.log(data2.user);
+            this.router.navigateByUrl('home/boards');
+            this.storageService.userId = data2.user.user_id;
+            this.storageService.firstname = data2.user.first_name;
+            // this.storage.set('user', data2.user.first_name);
+          });
+      } else if (data2.code === 1002) {
         console.log('User password is incorrect');
         this.passwordWrong = true;
         this.loggingInUser = false;
@@ -49,7 +59,7 @@ export class LoginComponent implements OnInit {
         this.unknownError = true;
         this.loggingInUser = false;
       }
-      console.log(data);
+      console.log(data2);
     });
   }
 
